@@ -7,12 +7,12 @@ import { type Project } from "../type";
 function Results() {
     const [votingData, setVotingData] = useState<Record<string, number>>({});
     const [votingData2, setVotingData2] = useState<Record<string, number>>({});
-    const [totalVotes, setTotalVotes] = useState(0);
+    // const [totalVotes, setTotalVotes] = useState(0);
   
     useEffect(() => {
       const handleUpdate = (data: { votingPolls: Record<string, number>; totalVotes: number }) => {
         setVotingData(data.votingPolls);
-        setTotalVotes(data.totalVotes);
+        // setTotalVotes(data.totalVotes);
       };
 
       socket.on('receive-vote', handleUpdate);
