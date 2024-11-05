@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { BarChart3, Download } from 'lucide-react';
 import VotingCard from '../components/VoteCard';
-import { socket } from '../socket_2';
+import { socket_2 } from '../socket_2';
 import { type Project } from '../type';
 
 function PopularVote() {
@@ -10,17 +10,17 @@ function PopularVote() {
   const [votingData, setVotingData] = useState<Record<string, number>>({});
 
   useEffect(() => {
-    socket.on('receive-vote', (data) => {
+    socket_2.on('receive-vote', (data) => {
       updatePolls(data);
     });
 
-    socket.on('update', (data) => {
+    socket_2.on('update', (data) => {
       updatePolls(data);
     });
 
     return () => {
-      socket.off('receive-vote');
-      socket.off('update');
+      socket_2.off('receive-vote');
+      socket_2.off('update');
     };
   }, []);
 
@@ -31,7 +31,7 @@ function PopularVote() {
 
   const handleVote = (id: string) => {
     if (hasVoted) return;
-    socket.emit('send-vote', id);
+    socket_2.emit('send-vote', id);
     setHasVoted(true);
   };
 

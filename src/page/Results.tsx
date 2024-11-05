@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import {  PieChart, Vote, ListChecks } from 'lucide-react';
 import { socket } from "../socket";
-import {socket as socket_2} from "../socket_2";
+import {socket_2} from "../socket_2";
 import { type Project } from "../type";
 
 function Results() {
