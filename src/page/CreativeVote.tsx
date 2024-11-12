@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
-import { BarChart3, Download } from 'lucide-react';
-import VotingCard from '../components/VoteCard';
-import { socket } from '../socket';
-import { type Project } from '../type';
+import { useState, useEffect } from "react";
+import { BarChart3, Download } from "lucide-react";
+import VotingCard from "../components/VoteCard";
+import { socket } from "../socket";
+import { type Project } from "../type";
 
 function CreativeVote() {
   const [hasVoted, setHasVoted] = useState(false);
@@ -10,28 +10,31 @@ function CreativeVote() {
   const [votingData, setVotingData] = useState<Record<string, number>>({});
 
   useEffect(() => {
-    socket.on('receive-vote', (data) => {
+    socket.on("receive-vote", (data) => {
       updatePolls(data);
     });
 
-    socket.on('update', (data) => {
+    socket.on("update", (data) => {
       updatePolls(data);
     });
 
     return () => {
-      socket.off('receive-vote');
-      socket.off('update');
+      socket.off("receive-vote");
+      socket.off("update");
     };
   }, []);
 
-  const updatePolls = (data: { votingPolls: Record<string, number>; totalVotes: number }) => {
+  const updatePolls = (data: {
+    votingPolls: Record<string, number>;
+    totalVotes: number;
+  }) => {
     setVotingData(data.votingPolls);
     setTotalVotes(data.totalVotes);
   };
 
   const handleVote = (id: string) => {
     if (hasVoted) return;
-    socket.emit('send-vote', id);
+    socket.emit("send-vote", id);
     setHasVoted(true);
   };
 
@@ -41,7 +44,9 @@ function CreativeVote() {
 
     projects.forEach((project) => {
       const votes = votingData[project.id] || 0;
-      const percentage = totalVotes ? Math.round((votes / totalVotes) * 100) : 0;
+      const percentage = totalVotes
+        ? Math.round((votes / totalVotes) * 100)
+        : 0;
       csvContent += `"${project.title}",${votes},${percentage}%\n`;
     });
 
@@ -56,74 +61,51 @@ function CreativeVote() {
 
   const projects: Project[] = [
     {
-      id: 'html',
-      title: 'อุปกรณ์ต้นแบบวัดค่ากำลังส่งสถานีเสริม',
-      budget: '9,000 บาท'
+      id: "html",
+      title: "อุปกรณ์ต้นแบบวัดค่ากำลังส่งสถานีเสริม",
     },
     {
-      id: 'css',
-      title: 'อุปกรณ์ควบคุมไฟเตือนสิ่งกีดขวางบนสิ่งปลูกสร้างและอาคารสูง (Obstruction Lights)',
+      id: "css",
+      title: "อุปกรณ์ควบคุมไฟเตือนสิ่งกีดขวางบนสิ่งปลูกสร้างและอาคารสูง",
     },
     {
-      id: 'javascript',
-      title: 'เครื่องควบคุมระบบ Automatic Transfer Switches ระยะไกล และตรวจสอบเครื่องกำเนิดไฟฟ้า ปี ต่อเนื่อง 2566'
+      id: "javascript",
+      title: "ระบบควบคุมเครื่องปรับอากาศระยะไกล",
     },
     {
-      id: 'react',
-      title: 'LNB Protection Switch ปี 2566 ต่อเนื่อง 2567'
+      id: "react",
+      title: "ผู้ช่วยเเจ้งเตือนอัจฉริยะ (Voice Notification Assistant )",
     },
     {
-      id: 'python',
-      title: 'ศึกษาความเป็นไปได้ โครงการ Radio Record System'
+      id: "python",
+      title: "Temperature Control System for BUC",
     },
     {
-      id: 'nodejs',
-      title: 'ระบบควบควบเครื่องปรับอากาศระยะไกล'
+      id: "nodejs",
+      title: "โครงการ PM 2.5 ",
     },
     {
-      id: 'express',
-      title: 'โครงการศึกษาและทดสอบ การตรวจเช็คการออกอากาศ โดย Streaming สัญญาณภาพจากสถานีปลายทาง'
+      id: "express",
+      title:
+        "การฟื้นฟูแบตเตอรี่เก่าของเครื่องสำรองไฟฟ้าด้วยวิธีพัลส์กระแสร่วมกับการจัดเรียงคู่แบบขนาน",
     },
     {
-      id: 'mongodb',
-      title: 'โครงการผู้ช่วยแจ้งเตือน ด้วยเสียง (Voice Notification Assistant)'
+      id: "mongodb",
+      title: "ศึกษาความเป็นไปได้ โครงการ Radio Recoder System",
     },
     {
-      id: 'sql',
-      title: 'เครื่องจ่ายสัญญาณ 1 PPS (Distribution 1PPS signal) สำหรับเครื่องส่งสัญญาณโทรทัศน์ภาคพื้นดินในระบบดิจิตอล'
+      id: "sql",
+      title: "ระบบรับรู้ความพร้อมใช้งานของสัญญาณดาวเทียมนำร่องทั่วโลก",
     },
     {
-      id: 'php',
-      title: 'โครงการ Dashbord Online'
+      id: "php",
+      title: "Smart Plung",
     },
     {
-      id: 'laravel',
-      title: 'โครงการ Notification Sound System'
+      id: "laravel",
+      title:
+        "โครงการเครื่องมอนิเตอร์การชาร์จแบตเตอรี่ 24 Volt (24 Volt Battery Charge Analyzer)",
     },
-    {
-      id: 'ruby',
-      title: 'โครงการ Temperature Control System for BUC'
-    },
-    {
-      id: 'rails',
-      title: 'โครงการ อุปกรณ์รวัดตรวจสอบอุณหภูมิของชุดคอมไบเนอร์'
-    },
-    {
-      id: 'django',
-      title: 'โครงการ PM 2.5'
-    },
-    {
-      id: 'flask',
-      title: 'ปลั๊กอัจฉริยะ'
-    },
-    {
-      id: 'docker',
-      title: 'ศึกษาความเป็นไปได้ของโครงการระบบรับรู้ความพร้อมใช้งานของสัญญาณดาวเทียมนําร่องทั่วโลก'
-    },
-    {
-      id: 'kubernetes',
-      title: 'โครงการจัดซื้อโปรแกรมออกแบบวงจรอิเล็กทรอนิกส์ Altium Designer'
-    }
   ];
 
   return (
@@ -135,7 +117,8 @@ function CreativeVote() {
         <div className="flex items-center justify-center gap-4 text-gray-600">
           <BarChart3 className="w-5 h-5" />
           <p className="text-xl">
-            คะแนนโหวตทั้งหมด: <span className="font-semibold">{totalVotes}</span>
+            คะแนนโหวตทั้งหมด:{" "}
+            <span className="font-semibold">{totalVotes}</span>
           </p>
         </div>
       </div>
