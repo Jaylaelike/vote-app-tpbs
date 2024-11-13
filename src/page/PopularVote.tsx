@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
-import { BarChart3, Download } from 'lucide-react';
-import VotingCard from '../components/VoteCard';
-import { socket_2 } from '../socket_2';
-import { type Project } from '../type';
+import { useState, useEffect } from "react";
+import { BarChart3, Download } from "lucide-react";
+import VotingCard from "../components/VoteCard";
+import { socket_2 } from "../socket_2";
+import { type Project } from "../type";
 
 function PopularVote() {
   const [hasVoted, setHasVoted] = useState(false);
@@ -10,28 +10,31 @@ function PopularVote() {
   const [votingData, setVotingData] = useState<Record<string, number>>({});
 
   useEffect(() => {
-    socket_2.on('receive-vote', (data) => {
+    socket_2.on("receive-vote", (data) => {
       updatePolls(data);
     });
 
-    socket_2.on('update', (data) => {
+    socket_2.on("update", (data) => {
       updatePolls(data);
     });
 
     return () => {
-      socket_2.off('receive-vote');
-      socket_2.off('update');
+      socket_2.off("receive-vote");
+      socket_2.off("update");
     };
   }, []);
 
-  const updatePolls = (data: { votingPolls_2: Record<string, number>; totalVotes_2: number }) => {
+  const updatePolls = (data: {
+    votingPolls_2: Record<string, number>;
+    totalVotes_2: number;
+  }) => {
     setVotingData(data.votingPolls_2);
     setTotalVotes(data.totalVotes_2);
   };
 
   const handleVote = (id: string) => {
     if (hasVoted) return;
-    socket_2.emit('send-vote', id);
+    socket_2.emit("send-vote", id);
     setHasVoted(true);
   };
 
@@ -41,7 +44,9 @@ function PopularVote() {
 
     projects.forEach((project) => {
       const votes = votingData[project.id] || 0;
-      const percentage = totalVotes ? Math.round((votes / totalVotes) * 100) : 0;
+      const percentage = totalVotes
+        ? Math.round((votes / totalVotes) * 100)
+        : 0;
       csvContent += `"${project.title}",${votes},${percentage}%\n`;
     });
 
@@ -101,18 +106,23 @@ function PopularVote() {
       title:
         "โครงการเครื่องมอนิเตอร์การชาร์จแบตเตอรี่ 24 Volt (24 Volt Battery Charge Analyzer)",
     },
+    {
+      id: "ruby",
+      title: "เครื่องวัดอุณหภูมิเครื่อง Combiner ",
+    },
   ];
 
   return (
     <div className="max-w-5xl mx-auto">
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold text-gray-900 mb-4">
-          โหวตโครงการความคิดสร้างสรรค์      
-            </h1>
+          โหวตโครงการความคิดสร้างสรรค์
+        </h1>
         <div className="flex items-center justify-center gap-4 text-gray-600">
           <BarChart3 className="w-5 h-5" />
           <p className="text-xl">
-            คะแนนโหวตทั้งหมด: <span className="font-semibold">{totalVotes}</span>
+            คะแนนโหวตทั้งหมด:{" "}
+            <span className="font-semibold">{totalVotes}</span>
           </p>
         </div>
       </div>

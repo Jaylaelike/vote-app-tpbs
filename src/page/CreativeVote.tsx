@@ -106,6 +106,11 @@ function CreativeVote() {
       title:
         "โครงการเครื่องมอนิเตอร์การชาร์จแบตเตอรี่ 24 Volt (24 Volt Battery Charge Analyzer)",
     },
+    {
+      id: "ruby",
+      title:
+        "เครื่องวัดอุณหภูมิเครื่อง Combiner ",
+    },
   ];
 
   return (
