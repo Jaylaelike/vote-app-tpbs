@@ -114,6 +114,10 @@ function CreativeVote() {
       id: "rails",
       title: "DSE7320 to LAN",
     },
+    {
+      id: "django",
+      title: "IRD Reboot box",
+    },
   ];
 
   return (
