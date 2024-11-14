@@ -110,6 +110,10 @@ function PopularVote() {
       id: "ruby",
       title: "เครื่องวัดอุณหภูมิเครื่อง Combiner ",
     },
+    {
+      id: "rails",
+      title: "DSE7320 to LAN",
+    },
   ];
 
   return (
